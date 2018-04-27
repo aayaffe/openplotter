@@ -203,6 +203,8 @@ class MainFrame(wx.Frame):
 		self.update.AppendSeparator()
 		self.openplotter_item1 = self.update.Append(wx.ID_ANY, _('Update OpenPlotter'), _('Apply latest changes'))
 		self.Bind(wx.EVT_MENU, self.update_openplotter, self.openplotter_item1)
+		self.openplotter_item2 = self.update.Append(wx.ID_ANY, _('Update OpenPlotter - Lou'), _('Apply latest changes from private repo'))
+		self.Bind(wx.EVT_MENU, self.update_openplotter_private, self.openplotter_item2)
 		self.menubar.Append(self.update, _('Updates'))
 
 		self.helpm = wx.Menu()
@@ -414,6 +416,24 @@ class MainFrame(wx.Frame):
 		subprocess.Popen(['lxterminal', '-e', 'bash '+self.currentpath+ '/update/update_OpenCPN_plugins.sh'])
 		self.ShowStatusBarBLACK(_('Follow the instructions of the new window'))
 
+	def update_openplotter_private(self, e):
+		# repository = self.conf.get('GENERAL', 'repository')
+		vl = self.conf.get('GENERAL', 'version')
+		sl = self.conf.get('GENERAL', 'state')
+		vl_list = vl.split('.')
+		local_xxx = int(vl_list[0])
+		local_oxx = int(vl_list[1])
+		local_oox = int(vl_list[2])
+		major_update = 1
+		vr = 18.0.1
+		sr = 'stable'
+		if not repository:
+			repository = 'aayaffe'
+			#self.conf.set('GENERAL', 'repository', repository)
+		subprocess.Popen(['lxterminal', '-e', 'bash '+self.currentpath+ '/update/update_OpenPlotter.sh', major_update, vr, sr, repository])
+		self.Close()
+		
+	
 	def update_openplotter(self, e):
 		repository = self.conf.get('GENERAL', 'repository')
 		vl = self.conf.get('GENERAL', 'version')
