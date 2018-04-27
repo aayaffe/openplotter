@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-#versioncheck3
+#versioncheck4
 
 # This file is part of Openplotter.
 # Copyright (C) 2015 by sailoog <https://github.com/sailoog/openplotter>
@@ -419,8 +419,8 @@ class MainFrame(wx.Frame):
 		self.ShowStatusBarBLACK(_('Follow the instructions of the new window'))
 
 	def update_openplotter_private(self, e):
-		major_update = 1
-		vr = 18
+		major_update = '1'
+		vr = '18'
 		sr = 'stable'
 		repository = 'aayaffe'
 		#self.conf.set('GENERAL', 'repository', repository)
