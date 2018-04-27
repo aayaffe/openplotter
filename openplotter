@@ -419,19 +419,11 @@ class MainFrame(wx.Frame):
 		self.ShowStatusBarBLACK(_('Follow the instructions of the new window'))
 
 	def update_openplotter_private(self, e):
-		# repository = self.conf.get('GENERAL', 'repository')
-		vl = self.conf.get('GENERAL', 'version')
-		sl = self.conf.get('GENERAL', 'state')
-		vl_list = vl.split('.')
-		local_xxx = int(vl_list[0])
-		local_oxx = int(vl_list[1])
-		local_oox = int(vl_list[2])
 		major_update = 1
 		vr = 18
 		sr = 'stable'
-		if not repository:
-			repository = 'aayaffe'
-			#self.conf.set('GENERAL', 'repository', repository)
+		repository = 'aayaffe'
+		#self.conf.set('GENERAL', 'repository', repository)
 		subprocess.Popen(['lxterminal', '-e', 'bash '+self.currentpath+ '/update/update_OpenPlotter_lou.sh', major_update, vr, sr, repository])
 		self.Close()
 		
