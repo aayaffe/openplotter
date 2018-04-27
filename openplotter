@@ -1,7 +1,6 @@
 #!/usr/bin/python
 
-
-#versioncheck1
+#versioncheck2
 
 # This file is part of Openplotter.
 # Copyright (C) 2015 by sailoog <https://github.com/sailoog/openplotter>
@@ -433,7 +432,7 @@ class MainFrame(wx.Frame):
 		if not repository:
 			repository = 'aayaffe'
 			#self.conf.set('GENERAL', 'repository', repository)
-		subprocess.Popen(['lxterminal', '-e', 'bash '+self.currentpath+ '/update/update_OpenPlotter.sh', major_update, vr, sr, repository])
+		subprocess.Popen(['lxterminal', '-e', 'bash '+self.currentpath+ '/update/update_OpenPlotter_lou.sh', major_update, vr, sr, repository])
 		self.Close()
 		
 	

@@ -3,7 +3,7 @@ major=$1
 version=$2
 status=$3
 repository=$4
-branch="lou_config"
+branch=lou_config
 op_folder=$(crudini --get ~/.openplotter/openplotter.conf GENERAL op_folder)
 if [ -z $major ]; then
 	major=1
@@ -24,7 +24,7 @@ echo
 echo "DOWNLOADING NEW OPENPLOTTER CODE..."
 echo
 rm -rf openplotter_tmp
-git https://github.com/$repository/openplotter.git openplotter_tmp
+git clone https://github.com/$repository/openplotter.git openplotter_tmp
 cd openplotter_tmp
 git checkout $branch
 cd ..
