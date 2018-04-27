@@ -13,7 +13,7 @@ if [ -z $status ]; then
 	status="beta"
 fi
 if [ -z $repository ]; then
-	repository="openplotter"
+	repository="aayaffe"
 fi
 if [ -z $op_folder ]; then
 	op_folder="/.config"
