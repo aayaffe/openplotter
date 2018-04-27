@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -x
 major=$1
 version=$2
 status=$3
