@@ -39,6 +39,10 @@ echo "DELETING OLD OPENPLOTTER CODE FILES..."
 echo
 rm -rf openplotter
 mv openplotter_tmp openplotter
+cd openplotter
+chmod 755 openplotter
+chmod 755 startup
+chmod 755 keyword
 echo
 read -p "FINISHED, PRESS ENTER TO REBOOT SYSTEM."
 shutdown -r now
