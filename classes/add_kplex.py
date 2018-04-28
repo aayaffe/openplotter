@@ -516,9 +516,9 @@ class addkplex(wx.Dialog):
 	def ShowMessage(self, w_msg):
 		wx.MessageBox(w_msg, 'Info', wx.OK | wx.ICON_INFORMATION)
 		
-	class ConnectionType():
-		Serial = 1
-		TCP = 2
-		UDP = 3
-		File = 4
+class ConnectionType():
+	Serial = 1
+	TCP = 2
+	UDP = 3
+	File = 4
 		
