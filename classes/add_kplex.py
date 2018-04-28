@@ -16,7 +16,6 @@
 # along with Openplotter. If not, see <http://www.gnu.org/licenses/>.
 import re
 import wx
-from enum import Enum
 
 
 class addkplex(wx.Dialog):
@@ -320,10 +319,7 @@ class addkplex(wx.Dialog):
 			self.kplex_device_select.Show(True)
 			self.kplex_ser_T2.Show(True)
 			self.kplex_baud_select.Show(True)
-			self.kplex_io_ser.Show(True)
-		else:
-			
-		
+			self.kplex_io_ser.Show(True)	
 
 	def on_kplex_io_change(self, event):
 		if self.kplex_type.GetValue() == 'Serial':
@@ -520,7 +516,7 @@ class addkplex(wx.Dialog):
 	def ShowMessage(self, w_msg):
 		wx.MessageBox(w_msg, 'Info', wx.OK | wx.ICON_INFORMATION)
 		
-	class ConnectionType(Enum):
+	class ConnectionType():
 		Serial = 1
 		TCP = 2
 		UDP = 3
