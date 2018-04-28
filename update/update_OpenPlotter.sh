@@ -34,7 +34,6 @@ echo "DOWNLOADING NEW OPENPLOTTER CODE..."
 echo
 rm -rf openplotter_tmp
 git clone -b $branch https://github.com/$repository/openplotter.git openplotter_tmp
-fi
 if [ $? -ne 0 ]; then
 	echo
 	read -p "#### ERROR. ABORTING, PRESS ENTER TO EXIT ####"
