@@ -1,5 +1,4 @@
 #!/bin/bash
-set -x
 major=$1
 version=$2
 status=$3
