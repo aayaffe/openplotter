@@ -3,6 +3,7 @@ major=$1
 version=$2
 status=$3
 repository=$4
+branch=$5
 op_folder=$(crudini --get ~/.openplotter/openplotter.conf GENERAL op_folder)
 if [ -z $major ]; then
 	major=1
@@ -13,9 +14,17 @@ fi
 if [ -z $repository ]; then
 	repository="openplotter"
 fi
+if [ -z $branch]; then
+	if [ $status = "beta"]; then
+		branch="beta"
+	else
+		branch = "master"
+	fi
+fi
 if [ -z $op_folder ]; then
 	op_folder="/.config"
 fi
+
 
 cd $HOME$op_folder
 
@@ -23,10 +32,7 @@ echo
 echo "DOWNLOADING NEW OPENPLOTTER CODE..."
 echo
 rm -rf openplotter_tmp
-if [ $status = "stable" ]; then
-	git clone https://github.com/$repository/openplotter.git openplotter_tmp
-else
-	git clone -b beta https://github.com/$repository/openplotter.git openplotter_tmp
+git clone -b $branch https://github.com/$repository/openplotter.git openplotter_tmp
 fi
 if [ $? -ne 0 ]; then
 	echo
