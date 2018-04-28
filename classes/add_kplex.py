@@ -64,7 +64,7 @@ class addkplex(wx.Dialog):
 
 		self.ser_io_list = ['in', 'out', 'both']
 		self.net_io_list = ['in', 'out']
-		wx.StaticText(panel, label=_('in/out'), pos=(470, 35))
+		self.kplex_io_label = wx.StaticText(panel, label=_('in/out'), pos=(470, 35))
 		self.kplex_io_ser = wx.ComboBox(panel, choices=self.ser_io_list, style=wx.CB_READONLY, size=(70, 32),
 										pos=(465, 55))
 		self.kplex_io_net = wx.ComboBox(panel, choices=self.net_io_list, style=wx.CB_READONLY, size=(70, 32),
@@ -308,18 +308,21 @@ class addkplex(wx.Dialog):
 		self.kplex_net_T2.Show(False)
 		self.kplex_netport.Show(False)
 		self.kplex_io_net.Show(False)
+		self.kplex_io_label.Show(False)
 		if con_type == ConnectionType.TCP or con_type == ConnectionType.UDP:
 			self.kplex_net_T1.Show(True)
 			self.kplex_address.Show(True)
 			self.kplex_net_T2.Show(True)
 			self.kplex_netport.Show(True)
 			self.kplex_io_net.Show(True)
+			self.kplex_io_label.Show(True)
 		elif con_type == ConnectionType.Serial:
 			self.kplex_ser_T1.Show(True)
 			self.kplex_device_select.Show(True)
 			self.kplex_ser_T2.Show(True)
 			self.kplex_baud_select.Show(True)
 			self.kplex_io_ser.Show(True)	
+			self.kplex_io_label.Show(True)
 
 	def on_kplex_io_change(self, event):
 		if self.kplex_type.GetValue() == 'Serial':
