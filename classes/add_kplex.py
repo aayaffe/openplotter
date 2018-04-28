@@ -16,6 +16,7 @@
 # along with Openplotter. If not, see <http://www.gnu.org/licenses/>.
 import re
 import wx
+from enum import Enum
 
 
 class addkplex(wx.Dialog):
@@ -36,7 +37,7 @@ class addkplex(wx.Dialog):
 		self.SetIcon(self.icon)
 
 		wx.StaticText(panel, label=_('Type'), pos=(20, 30))
-		self.kplex_type_list = ['Serial', 'TCP', 'UDP']
+		self.kplex_type_list = ['Serial', 'TCP', 'UDP', 'File']
 		self.kplex_type = wx.ComboBox(panel, choices=self.kplex_type_list, style=wx.CB_READONLY, size=(80, 32),
 									  pos=(20, 55))
 		self.Bind(wx.EVT_COMBOBOX, self.on_kplex_type_change, self.kplex_type)
@@ -138,19 +139,19 @@ class addkplex(wx.Dialog):
 			self.kplex_baud_select.SetValue('4800')
 			self.kplex_io_ser.SetValue('in')
 			self.kplex_io_net.SetValue('in')
-			self.switch_ser_net(True)
+			self.switch_con_type_ui(ConnectionType.Serial)
 			self.switch_io_out(False)
 		else:
 			self.kplex_name.SetValue(edit[0])
 			self.kplex_type.SetValue(edit[1])
 			if edit[1] == 'Serial':
 				self.kplex_io_ser.SetValue(edit[2])
-				self.switch_ser_net(True)
+				self.switch_con_type_ui(ConnectionType.Serial)
 				self.kplex_device_select.SetValue(edit[3])
 				self.kplex_baud_select.SetValue(edit[4])
 			else:
 				self.kplex_io_net.SetValue(edit[2])
-				self.switch_ser_net(False)
+				self.switch_con_type_ui(ConnectionType.TCP)
 				self.kplex_address.SetValue(edit[3])
 				self.kplex_netport.SetValue(edit[4])
 			self.on_kplex_io_change(0)
@@ -174,7 +175,7 @@ class addkplex(wx.Dialog):
 	def GPS_examp(self, e):
 		self.kplex_type.SetValue('Serial')
 		self.kplex_io_ser.SetValue('in')
-		self.switch_ser_net(True)
+		self.switch_con_type_ui(ConnectionType.Serial)
 		self.switch_io_out(False)
 		self.switch_io_in(True)
 		self.kplex_baud_select.SetValue('4800')
@@ -187,7 +188,7 @@ class addkplex(wx.Dialog):
 	def AP_examp(self, e):
 		self.kplex_type.SetValue('Serial')
 		self.kplex_io_ser.SetValue('both')
-		self.switch_ser_net(True)
+		self.switch_con_type_ui(ConnectionType.Serial)
 		self.switch_io_out(True)
 		self.switch_io_in(True)
 		self.kplex_baud_select.SetValue('4800')
@@ -200,10 +201,10 @@ class addkplex(wx.Dialog):
 	def gpsd_examp(self, e):
 		self.kplex_type.SetValue('TCP')
 		self.kplex_io_net.SetValue('in')
-		self.switch_ser_net(False)
+		self.switch_con_type_ui(ConnectionType.TCP)
 		self.switch_io_out(False)
 		self.switch_io_in(True)
-		self.switch_ser_net(False)
+		self.switch_con_type_ui(ConnectionType.TCP)
 		self.kplex_address.SetValue('127.0.0.1')
 		self.kplex_netport.SetValue('2947')
 		self.kplex_baud_select.SetValue('4800')
@@ -289,21 +290,40 @@ class addkplex(wx.Dialog):
 
 	def on_kplex_type_change(self, event):
 		if self.kplex_type.GetValue() == 'Serial':
-			self.switch_ser_net(True)
+			self.switch_con_type_ui(ConnectionType.Serial)
+		elif self.kplex_type.GetValue() == 'TCP':
+			self.switch_con_type_ui(ConnectionType.TCP)
+		elif self.kplex_type.GetValue() == 'UDP':
+			self.switch_con_type_ui(ConnectionType.UDP)
 		else:
-			self.switch_ser_net(False)
+			self.switch_con_type_ui(ConnectionType.File)
 
-	def switch_ser_net(self, b):
-		self.kplex_ser_T1.Show(b)
-		self.kplex_device_select.Show(b)
-		self.kplex_ser_T2.Show(b)
-		self.kplex_baud_select.Show(b)
-		self.kplex_io_ser.Show(b)
-		self.kplex_net_T1.Show(not b)
-		self.kplex_address.Show(not b)
-		self.kplex_net_T2.Show(not b)
-		self.kplex_netport.Show(not b)
-		self.kplex_io_net.Show(not b)
+	def switch_con_type_ui(self, con_type):
+		self.kplex_ser_T1.Show(False)
+		self.kplex_device_select.Show(False)
+		self.kplex_ser_T2.Show(False)
+		self.kplex_baud_select.Show(False)
+		self.kplex_io_ser.Show(False)
+		self.kplex_net_T1.Show(False)
+		self.kplex_address.Show(False)
+		self.kplex_net_T2.Show(False)
+		self.kplex_netport.Show(False)
+		self.kplex_io_net.Show(False)
+		if con_type == ConnectionType.TCP or con_type == ConnectionType.UDP:
+			self.kplex_net_T1.Show(True)
+			self.kplex_address.Show(True)
+			self.kplex_net_T2.Show(True)
+			self.kplex_netport.Show(True)
+			self.kplex_io_net.Show(True)
+		elif con_type == ConnectionType.Serial:
+			self.kplex_ser_T1.Show(True)
+			self.kplex_device_select.Show(True)
+			self.kplex_ser_T2.Show(True)
+			self.kplex_baud_select.Show(True)
+			self.kplex_io_ser.Show(True)
+		else:
+			
+		
 
 	def on_kplex_io_change(self, event):
 		if self.kplex_type.GetValue() == 'Serial':
@@ -499,3 +519,10 @@ class addkplex(wx.Dialog):
 
 	def ShowMessage(self, w_msg):
 		wx.MessageBox(w_msg, 'Info', wx.OK | wx.ICON_INFORMATION)
+		
+	class ConnectionType(Enum):
+		Serial = 1
+		TCP = 2
+		UDP = 3
+		File = 4
+		
