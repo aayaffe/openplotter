@@ -15,11 +15,11 @@ fi
 if [ -z $repository ]; then
 	repository="openplotter"
 fi
-if [ -z $branch]; then
-	if [ $status = "beta"]; then
+if [ -z $branch ]; then
+	if [ $status = "beta" ]; then
 		branch="beta"
 	else
-		branch = "master"
+		branch="master"
 	fi
 fi
 if [ -z $op_folder ]; then
